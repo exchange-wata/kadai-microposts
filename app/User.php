@@ -98,10 +98,8 @@ class User extends Authenticatable
     public function add_favorites($micropostId)
     {
         $exist_fav = $this->is_favorites($micropostId);
-        // 相手が自分自身ではないかの確認
-        $its_fav = $this->id == $micropostId;
-    
-        if ($exist_fav || $its_fav) {
+
+        if ($exist_fav) {
             return false;
         } else {
             $this->favorites()->attach($micropostId);
@@ -112,10 +110,8 @@ class User extends Authenticatable
     public function del_favorites($micropostId)
     {
         $exist_fav = $this->is_favorites($micropostId);
-        // 相手が自分自身ではないかの確認
-        $its_fav = $this->id == $micropostId;
-    
-        if ($exist_fav && !$its_fav) {
+
+        if ($exist_fav) {
             $this->favorites()->detach($micropostId);
             return true;
         } else {
